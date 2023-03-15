@@ -4,6 +4,7 @@ const fs = require('fs')
 const Discord = require('discord.js');
 const { DisTube, SearchResultType, Song } = require('distube');
 const {prefix} = require("./config.json");
+const EventEmitter = require('events');
 require('dotenv').config();
 const client = new Discord.Client({
 	setMaxListeners: 0,
@@ -285,6 +286,8 @@ distube
 			time = new Date(SECONDS * 1000).toISOString().substring(11, 16) + " Hour";
 		}
 		channel.send("Playlist ត្រូវបានបញ្ជូលទៅក្នុងបញ្ជី " + `(${playlist.songs.length}) ចម្រៀង (${time})`);
+	}).on('searchNoResult', () => {
+		channel.send("🔸 រកចម្រៀងមិនឃើញ!");
 	});
 
 client.login(process.env.TOKEN);
