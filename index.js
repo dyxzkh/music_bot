@@ -34,7 +34,10 @@ client.on('ready', client => {
 
 client.on('messageCreate', message => {
 	const queue = distube.getQueue(message);
-
+	// if (queue === null || queue === undefined){
+	// 	//message.channel.send(`រកចម្រៀងនេះមិនឃើញទេ!`)
+	// 	return;
+	// }
 	if (message.author.bot || !message.inGuild()) return;
 	if (!message.content.startsWith(prefix)) return;
 	const args = message.content
@@ -43,16 +46,20 @@ client.on('messageCreate', message => {
 		.split(/ +/g);
 	const cmd = args.shift();
 
+	// console.log(args)
+	// console.log(cmd)
+
 	channel = message.channel;
 	author = message.author;
 	
-
 	if(cmd === 'ping'){
 		return message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
 	}
 
 	if (cmd === 'play' || cmd === 'p') {
-		const voiceChannel = message.member?.voice?.channel;
+
+		try {
+			const voiceChannel = message.member?.voice?.channel;
 		if (voiceChannel) {
 			if(args.join(' ') === ""){
 				message.channel.send(
@@ -66,6 +73,10 @@ client.on('messageCreate', message => {
 				'>>> សូមចូល Voice Channel ជាមុនសិនមុននឹងវាយ cmd!😆',
 			);
 			return;
+		}
+		} catch (error) {
+			message.channel.send("មានបញ្ហាក្នុងការចាក់ចម្រៀងនេះ!");
+			console.log(error)
 		}
 	}
 
