@@ -21,6 +21,7 @@
     "discord.js": "^14.8.0",
     "distube": "^4.0.4",
     "dotenv": "^16.0.3",
+    "ffmpeg-static": "^4.4.1",
     "libsodium-wrappers": "^0.7.11"
   }
 }
